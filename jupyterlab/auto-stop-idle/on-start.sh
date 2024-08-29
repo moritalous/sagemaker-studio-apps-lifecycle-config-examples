@@ -64,3 +64,28 @@ echo "Adding autostop idle Python script to crontab..."
 echo "*/2 * * * * /bin/bash -ic '$CONDA_HOME/python $PYTHON_SCRIPT_PATH --idle-time $IDLE_TIME_IN_SECONDS --hostname $JL_HOSTNAME \
 --port $JL_PORT --base-url $JL_BASE_URL --ignore-connections $IGNORE_CONNECTIONS \
 --skip-terminals $SKIP_TERMINALS --state-file-path $STATE_FILE >> $LOG_FILE'" | sudo crontab -
+
+
+##########
+curl -L "https://code.visualstudio.com/sha/download?build=stable&os=cli-alpine-x64" -o vscode_cli_alpine_x64_cli.tar.gz
+tar zxvf vscode_cli_alpine_x64_cli.tar.gz
+mkdir -p /home/sagemaker-user/.local/bin
+mv code /home/sagemaker-user/.local/bin/
+rm vscode_cli_alpine_x64_cli.tar.gz
+
+cat << EOF > /home/sagemaker-user/.jupyter/jupyter_server_config.py
+
+c.ServerProxy.servers = {
+    "8080": {"port": 8080},
+    "8081": {"port": 8081},
+    "8082": {"port": 8082},
+    "vscode": {
+        "command": ["/home/sagemaker-user/.local/bin/code", "serve-web", "--without-connection-token", "--accept-server-license-terms", "--port", "{port}", "--server-base-path", "{base_url}vscode/"],
+        "absolute_url": True,
+        "launcher_entry": {
+            "path_info": "vscode/"
+        }
+    }
+}
+
+EOF

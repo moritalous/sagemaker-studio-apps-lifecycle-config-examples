@@ -71,7 +71,7 @@ curl -L "https://update.code.visualstudio.com/latest/cli-linux-x64/stable" -o vs
 tar zxvf vscode_cli.tar.gz
 mkdir -p /home/sagemaker-user/.local/bin
 mv code /home/sagemaker-user/.local/bin/
-rm vscode_cli_alpine_x64_cli.tar.gz
+rm vscode_cli.tar.gz
 
 cat << EOF > /home/sagemaker-user/.jupyter/jupyter_server_config.py
 

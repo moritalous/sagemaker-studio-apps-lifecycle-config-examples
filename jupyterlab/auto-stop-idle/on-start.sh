@@ -12,7 +12,7 @@ ASI_VERSION=0.3.1
 #   2. The Studio Domain or User Profile execution role has permissions to SageMaker:DeleteApp to delete the JupyterLab app
 
 # User variables [update as needed]
-IDLE_TIME_IN_SECONDS=3600       # The max time (in seconds) the JupyterLab app can stay idle before being terminated.
+IDLE_TIME_IN_SECONDS=1800       # The max time (in seconds) the JupyterLab app can stay idle before being terminated.
 
 # User variables - advanced [update only if needed]
 IGNORE_CONNECTIONS=True         # Set to False if you want to consider idle JL sessions with active connections as not idle.
@@ -67,8 +67,8 @@ echo "*/2 * * * * /bin/bash -ic '$CONDA_HOME/python $PYTHON_SCRIPT_PATH --idle-t
 
 
 ##########
-curl -L "https://code.visualstudio.com/sha/download?build=stable&os=cli-alpine-x64" -o vscode_cli_alpine_x64_cli.tar.gz
-tar zxvf vscode_cli_alpine_x64_cli.tar.gz
+curl -L "https://update.code.visualstudio.com/latest/cli-linux-x64/stable" -o vscode_cli.tar.gz
+tar zxvf vscode_cli.tar.gz
 mkdir -p /home/sagemaker-user/.local/bin
 mv code /home/sagemaker-user/.local/bin/
 rm vscode_cli_alpine_x64_cli.tar.gz
